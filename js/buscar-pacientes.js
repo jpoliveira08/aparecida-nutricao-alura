@@ -15,7 +15,25 @@ botaoBuscar.addEventListener("click", function(){
 
     //Precisamos criar um Evento para analisar a resposta da requisicao
     xhr.addEventListener("load", function(){
-        //Imprimindo a resposta da requisicao
-        console.log(xhr.responseText);
+        var erroAjax = document.querySelector("#erro-ajax");
+        /**
+         * Tratando possíveis erros de requisições
+         */
+        if(xhr.status == 200){
+            erroAjax.classList.add("invisivel");
+            //Imprimindo a resposta da requisicao
+            //O retorno que temos é um json, um jeito de transportar pela web um formato de dado muito parecido com objeto do JS
+            //Precisamos converter esse JSON em um array de objetos
+            var resposta = xhr.responseText;
+            var pacientes = JSON.parse(resposta);
+            
+            pacientes.forEach(function(paciente){
+                adicionaPacienteNaTabela(paciente);
+            });
+        }else{
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+            erroAjax.classList.remove("invisivel");
+        }
     });
 });

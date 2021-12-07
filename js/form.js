@@ -12,16 +12,13 @@
 
     var paciente = obterPacienteDoFormulario(form);
 
-    var pacienteTr = montaTr(paciente);
-
     var erros = validaPaciente(paciente);
     if(erros.length != 0){
         exibeMensagemErro(erros);
         return;
     }
-    var tabela = document.querySelector("#tabela-pacientes");
 
-    tabela.appendChild(pacienteTr);
+    adicionaPacienteNaTabela(paciente);
 
     form.reset();
     /**
@@ -30,6 +27,12 @@
     var mensagemErro = document.querySelector("ul");
     mensagemErro.innerHTML = "";
 });
+
+function adicionaPacienteNaTabela(paciente){
+    var pacienteTr = montaTr(paciente);
+    var tabela = document.querySelector("#tabela-pacientes");
+    tabela.appendChild(pacienteTr);
+}
 
 function exibeMensagemErro(erros){
     var ul = document.querySelector("#mensagem-erro");
